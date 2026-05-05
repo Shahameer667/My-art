@@ -330,4 +330,212 @@ const STEPS = [
       {t:1480,html:`<span class="cp"></span>`},
       {t:1680,html:`<span class="ck">const</span><span class="cp"> userSchema = z.object({</span>`},
       {t:1960,html:`<span class="cp">  name: z.</span><span class="cf">string</span><span class="cp">().</span><span class="cf">min</span><span class="cp">(</span><span class="cn">2</span><span class="cp">),</span>`},
-      {t:2220,html:`<s
+      {t:2220,html:`<span class="cp">  email: z.</span><span class="cf">string</span><span class="cp">().</span><span class="cf">email</span><span class="cp">(),</span>`},
+      {t:2480,html:`<span class="cp">})</span>`},
+      {t:2720,html:`<span class="cp"></span>`},
+      {t:2900,html:`<span class="cc">// GET all users</span>`},
+      {t:3150,html:`<span class="cf">router</span><span class="cp">.</span><span class="cf">get</span><span class="cp">(</span><span class="cs">'/'</span><span class="cp">, </span><span class="ck">async</span><span class="cp"> (req, res) => {</span>`,hl:true},
+      {t:3480,html:`<span class="cp">  </span><span class="ck">const</span><span class="cp"> users = </span><span class="ck">await</span><span class="cp"> </span><span class="cf">getUsers</span><span class="cp">()</span>`},
+      {t:3750,html:`<span class="cp">  res.</span><span class="cf">json</span><span class="cp">({ users, count: users.length })</span>`},
+      {t:4000,html:`<span class="cp">})</span>`},
+      {t:4200,html:`<span class="cp"></span>`},
+      {t:4380,html:`<span class="cc">// POST create user</span>`},
+      {t:4620,html:`<span class="cf">router</span><span class="cp">.</span><span class="cf">post</span><span class="cp">(</span><span class="cs">'/'</span><span class="cp">, </span><span class="ck">async</span><span class="cp"> (req, res) => {</span>`,hl:true},
+      {t:4950,html:`<span class="cp">  </span><span class="ck">const</span><span class="cp"> body = userSchema.</span><span class="cf">parse</span><span class="cp">(req.body)</span>`},
+      {t:5220,html:`<span class="cp">  </span><span class="ck">const</span><span class="cp"> user = </span><span class="ck">await</span><span class="cp"> </span><span class="cf">createUser</span><span class="cp">(body)</span>`},
+      {t:5490,html:`<span class="cp">  res.</span><span class="cf">status</span><span class="cp">(</span><span class="cn">201</span><span class="cp">).</span><span class="cf">json</span><span class="cp">({ user })</span>`},
+      {t:5760,html:`<span class="cp">})</span>`},
+      {t:5980,html:`<span class="ck">export default</span><span class="cp"> router</span>`},
+    ]
+    },
+  {
+    file:"src/middleware/auth.js",
+    ai:"<strong>AI added:</strong> JWT verification middleware with role-based access control",
+    lines:[
+      {t:0,   html:`<span class="ck">import</span><span class="cp"> jwt </span><span class="ck">from</span><span class="cs"> 'jsonwebtoken'</span>`},
+      {t:380, html:`<span class="cp"></span>`},
+      {t:650, html:`<span class="ck">export const</span><span class="cp"> </span><span class="cf">verifyToken</span><span class="cp"> = (req, res, next) => {</span>`,hl:true},
+      {t:980, html:`<span class="cp">  </span><span class="ck">const</span><span class="cp"> auth = req.headers.authorization</span>`},
+      {t:1260,html:`<span class="cp">  </span><span class="ck">const</span><span class="cp"> token = auth?.</span><span class="cf">split</span><span class="cp">(</span><span class="cs">' '</span><span class="cp">)[</span><span class="cn">1</span><span class="cp">]</span>`},
+      {t:1540,html:`<span class="cp"></span>`},
+      {t:1720,html:`<span class="ck">  if</span><span class="cp"> (!token)</span>`},
+      {t:1960,html:`<span class="cp">    </span><span class="ck">return</span><span class="cp"> res.</span><span class="cf">status</span><span class="cp">(</span><span class="cn">401</span><span class="cp">).</span><span class="cf">json</span><span class="cp">({ error: </span><span class="cs">'No token'</span><span class="cp"> })</span>`},
+      {t:2280,html:`<span class="cp"></span>`},
+      {t:2460,html:`<span class="ck">  try</span><span class="cp"> {</span>`},
+      {t:2700,html:`<span class="cp">    </span><span class="ck">const</span><span class="cp"> decoded = jwt.</span><span class="cf">verify</span><span class="cp">(token, process.env.JWT_SECRET)</span>`},
+      {t:2980,html:`<span class="cp">    req.user = decoded</span>`},
+      {t:3220,html:`<span class="cp">    </span><span class="cf">next</span><span class="cp">()</span>`},
+      {t:3460,html:`<span class="ck">  } catch</span><span class="cp"> (err) {</span>`},
+      {t:3700,html:`<span class="cp">    res.</span><span class="cf">status</span><span class="cp">(</span><span class="cn">403</span><span class="cp">).</span><span class="cf">json</span><span class="cp">({ error: </span><span class="cs">'Invalid token'</span><span class="cp"> })</span>`},
+      {t:3980,html:`<span class="cp">  }</span>`},
+      {t:4200,html:`<span class="cp">}</span>`},
+      {t:4450,html:`<span class="cp"></span>`},
+      {t:4700,html:`<span class="cg">// ✓ Auth middleware ready — JWT verified</span>`},
+    ]
+  },
+  {
+    file:"05_deploy.sh",
+    ai:"<strong>AI deployed:</strong> build passed all checks — live at <strong>codewopro.app</strong> 🚀",
+    lines:[
+      {t:0,   html:`<span class="cd"># ── Deploy to Production ──</span>`},
+      {t:350, html:`<span class="cp"></span>`},
+      {t:650, html:`<span class="cd">$ codewopro deploy --prod</span>`},
+      {t:1050,html:`<span class="cd">  Building project…</span>`},
+      {t:1550,html:`<span class="cg">  ✓ TypeScript compiled      (0 errors)</span>`},
+      {t:1900,html:`<span class="cg">  ✓ Tests passed             (14 / 14)</span>`},
+      {t:2250,html:`<span class="cg">  ✓ Lint clean               (0 warnings)</span>`},
+      {t:2600,html:`<span class="cg">  ✓ Bundle optimized         42kb gzip</span>`},
+      {t:2950,html:`<span class="cp"></span>`},
+      {t:3200,html:`<span class="cd">  Pushing to edge network…</span>`},
+      {t:3700,html:`<span class="cg">  ✓ CDN propagated           38 regions</span>`},
+      {t:4050,html:`<span class="cg">  ✓ SSL certificate          active</span>`},
+      {t:4400,html:`<span class="cg">  ✓ Health check             passing</span>`},
+      {t:4750,html:`<span class="cp"></span>`},
+      {t:5100,html:`<span class="cg">  🚀 LIVE → https://codewopro.app</span>`},
+      {t:5500,html:`<span class="cd">  Total deploy time: 12.4s  (AI optimized)</span>`},
+    ]
+  }
+];
+let cur = 0, autoPlay = true;
+let timers = [], nextTimer = null;
+const HOLD = 1400;
+
+function clearAll() {
+  timers.forEach(clearTimeout);
+  timers = [];
+  if (nextTimer) clearTimeout(nextTimer);
+}
+
+function runStep(idx) {
+  clearAll();
+  cur = idx;
+  const step = STEPS[idx];
+  const body = document.getElementById('termBody');
+  body.innerHTML = '';
+
+  // nav state
+  document.querySelectorAll('.step-item').forEach((el, i) => {
+    el.classList.remove('active','done');
+    if (i < idx) el.classList.add('done');
+    if (i === idx) el.classList.add('active');
+  });
+
+  // reset fill bars
+  for (let i = 0; i < STEPS.length; i++) {
+    const sf = document.getElementById('sf' + i);
+    if (sf) { sf.style.transition = 'none'; sf.style.width = '0%'; }
+  }
+
+  // header
+  document.getElementById('tFile').textContent = step.file;
+  document.getElementById('tStatusTxt').textContent = 'AI Running';
+  const ts = document.getElementById('tStatus');
+  ts.className = 't-status';
+
+  document.getElementById('aiText').innerHTML = 'Generating code…';
+  updateProgress();
+
+  const lastT = step.lines[step.lines.length - 1].t;
+  const totalDur = lastT + 700;
+
+  step.lines.forEach((line, li) => {
+    const id = setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'code-line' + (line.hl ? ' hl-line' : '');
+
+      const lnEl = document.createElement('span');
+      lnEl.className = 'ln';
+      lnEl.textContent = String(li + 1).padStart(2, ' ');
+
+      const codeEl = document.createElement('span');
+      codeEl.innerHTML = line.html;
+
+      // cursor on last line
+      if (li === step.lines.length - 1) {
+        const cur2 = document.createElement('span');
+        cur2.className = 't-cursor';
+        codeEl.appendChild(cur2);
+      }
+
+      el.appendChild(lnEl);
+      el.appendChild(codeEl);
+      body.appendChild(el);
+
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('vis')));
+      body.scrollTop = body.scrollHeight;
+
+      // fill bar progress
+      const sf = document.getElementById('sf' + idx);
+      if (sf) {
+        const pct = Math.min(100, (line.t / totalDur) * 100);
+        sf.style.transition = `width 280ms linear`;
+        sf.style.width = pct + '%';
+      }
+
+      // last line
+      if (li === step.lines.length - 1) {
+        document.getElementById('tStatusTxt').textContent = '✓ Done';
+        ts.className = 't-status done-s';
+        document.getElementById('aiText').innerHTML = step.ai;
+
+        // fill bar to 100%
+        const sfFull = document.getElementById('sf' + idx);
+        if (sfFull) { sfFull.style.transition = 'width .45s ease'; sfFull.style.width = '100%'; }
+
+        // mark done
+        setTimeout(() => {
+          document.querySelectorAll('.step-item')[idx].classList.add('done');
+          updateProgress();
+        }, 400);
+
+        // auto next
+        if (autoPlay) {
+          nextTimer = setTimeout(() => {
+            if (cur < STEPS.length - 1) runStep(cur + 1);
+            else {
+              document.getElementById('tStatusTxt').textContent = '🚀 Complete';
+              updateProgress(true);
+            }
+          }, HOLD);
+        }
+      }
+    }, line.t);
+    timers.push(id);
+  });
+      }
+        function updateProgress(done) {
+  const pct = done ? 100 : ((cur) / STEPS.length) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progTxt').textContent = `${cur + 1} / ${STEPS.length}`;
+}
+
+function jumpTo(idx) {
+  clearAll();
+  runStep(idx);
+}
+
+function replayAll() {
+  clearAll();
+  document.querySelectorAll('.step-item').forEach(el => el.classList.remove('done','active'));
+  document.getElementById('progFill').style.width = '0%';
+  for (let i = 0; i < STEPS.length; i++) {
+    const sf = document.getElementById('sf' + i);
+    if (sf) { sf.style.transition = 'none'; sf.style.width = '0%'; }
+  }
+  runStep(0);
+}
+
+function toggleAuto() {
+  autoPlay = !autoPlay;
+  const t = document.getElementById('autoTgl');
+  t.classList.toggle('on', autoPlay);
+}
+
+// Start when process section visible
+const obs = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) { runStep(0); obs.disconnect(); }
+}, { threshold: 0.25 });
+obs.observe(document.getElementById('process'));
+</script>
+</body>
+</html>
