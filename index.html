@@ -4,384 +4,119 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [step, setStep] = useState(0);
-  const [displayText, setDisplayText] = useState("");
   
   const codingSteps = [
-    { text: "Step 1: Initializing CodeWo AI Engine...", highlight: "#00ff00" },
-    { text: "Step 2: Loading Neural Networks...", highlight: "#00ff00" },
-    { text: "Step 3: Connecting to Cloud Database...", highlight: "#ffff00" },
-    { text: "Step 4: Setting up API Routes...", highlight: "#ffff00" },
-    { text: "Step 5: Compiling Smart Contracts...", highlight: "#ff6600" },
-    { text: "Step 6: Deploying AI Models...", highlight: "#ff6600" },
-    { text: "Step 7: System Ready! ✅", highlight: "#00ff00" }
+    "Initializing CodeWo AI Engine...",
+    "Loading Neural Networks...",
+    "Connecting to Cloud Database...",
+    "Setting up API Routes...",
+    "Compiling Smart Contracts...",
+    "Deploying AI Models...",
+    "System Ready! ✅"
   ];
 
   useEffect(() => {
     if (step < codingSteps.length) {
-      const timer = setTimeout(() => {
-        setStep(step + 1);
-        setDisplayText(codingSteps[step].text);
-      }, 1000);
+      const timer = setTimeout(() => setStep(step + 1), 800);
       return () => clearTimeout(timer);
     }
   }, [step]);
 
   return (
-    <div style={styles.container}>
-      {/* Header Logo */}
-      <div style={styles.header}>
-        <div style={styles.logoCircle}>
-          <span style={styles.logoCaret}>^</span>
+    <div style={{ minHeight: "100vh", background: "#000", color: "#fff", fontFamily: "monospace", padding: "20px" }}>
+      
+      {/* Logo */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "15px", marginBottom: "40px" }}>
+        <div style={{ width: "50px", height: "50px", background: "#000", borderRadius: "50%", border: "2px solid #fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={{ fontSize: "30px", fontWeight: "bold", color: "#fff" }}>^</span>
         </div>
-        <span style={styles.logoText}>CodeWo Pro AI</span>
+        <span style={{ fontSize: "24px", fontWeight: "bold" }}>CodeWo Pro AI</span>
       </div>
 
-      {/* Main Coding Visual Interface */}
-      <div style={styles.codingInterface}>
-        <div style={styles.interfaceHeader}>
-          <div style={styles.windowControls}>
-            <span style={styles.controlRed}></span>
-            <span style={styles.controlYellow}></span>
-            <span style={styles.controlGreen}></span>
+      {/* Terminal */}
+      <div style={{ maxWidth: "800px", margin: "0 auto 50px", background: "#0a0a0a", border: "1px solid #333", borderRadius: "10px", overflow: "hidden" }}>
+        <div style={{ background: "#1a1a1a", padding: "10px 20px", borderBottom: "1px solid #333", display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <span style={{ width: "12px", height: "12px", background: "#ff5f56", borderRadius: "50%" }}></span>
+            <span style={{ width: "12px", height: "12px", background: "#ffbd2e", borderRadius: "50%" }}></span>
+            <span style={{ width: "12px", height: "12px", background: "#27c93f", borderRadius: "50%" }}></span>
           </div>
-          <span style={styles.interfaceTitle}>CodeWo AI Terminal v2.0</span>
+          <span style={{ color: "#888", fontSize: "12px" }}>CodeWo Terminal</span>
         </div>
-
-        <div style={styles.interfaceBody}>
-          <div style={styles.lineNumber}>1</div>
-          <div style={styles.codeContent}>
-            {codingSteps.slice(0, step).map((item, idx) => (
-              <div key={idx} style={{...styles.codeLine, color: item.highlight}}>
-                <span style={styles.promptSymbol}>{">>"}</span> {item.text}
-              </div>
-            ))}
-            {step < codingSteps.length && (
-              <div style={styles.typingLine}>
-                <span style={styles.promptSymbol}>></span>
-                <span style={styles.typingCursor}>_</span>
-              </div>
-            )}
-          </div>
+        
+        <div style={{ padding: "20px", minHeight: "250px" }}>
+          {codingSteps.slice(0, step).map((line, idx) => (
+            <div key={idx} style={{ color: idx === codingSteps.length - 1 ? "#0f0" : "#0f0", marginBottom: "8px" }}>
+              <span style={{ color: "#0f0", marginRight: "10px" }}>></span> {line}
+            </div>
+          ))}
+          {step < codingSteps.length && (
+            <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+              <span style={{ color: "#0f0" }}>></span>
+              <span style={{ display: "inline-block", width: "10px", height: "18px", background: "#0f0", animation: "blink 1s infinite" }}></span>
+            </div>
+          )}
         </div>
-
-        <div style={styles.interfaceFooter}>
-          <span style={styles.statusDot}></span>
-          <span style={styles.statusText}>
-            {step === codingSteps.length ? "System Online ✅" : `Initializing... ${Math.floor(step / codingSteps.length * 100)}%`}
+        
+        <div style={{ background: "#0a0a0a", padding: "8px 20px", borderTop: "1px solid #333" }}>
+          <span style={{ color: step === codingSteps.length ? "#0f0" : "#ff0" }}>
+            {step === codingSteps.length ? "✅ System Online" : `⚙️ Loading... ${Math.floor(step / codingSteps.length * 100)}%`}
           </span>
         </div>
       </div>
 
-      {/* Hero Section */}
-      <div style={styles.heroSection}>
-        <h1 style={styles.mainTitle}>
-          <span style={styles.bracket}>{'<'}</span>
+      {/* Hero */}
+      <div style={{ textAlign: "center", maxWidth: "1000px", margin: "0 auto" }}>
+        <h1 style={{ fontSize: "56px", marginBottom: "10px" }}>
+          <span style={{ color: "#0f0" }}>&lt;</span>
           CodeWo Pro AI
-          <span style={styles.bracket}>{'/>'}</span>
+          <span style={{ color: "#0f0" }}>/&gt;</span>
         </h1>
-        <p style={styles.subtitle}>Enterprise Grade AI Coding Platform</p>
+        <p style={{ fontSize: "20px", color: "#888", marginBottom: "40px" }}>Enterprise Grade AI Coding Platform</p>
         
-        <div style={styles.buttonContainer}>
-          <button style={styles.btnPrimary} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
-            🚀 Launch Dashboard
-          </button>
-          <button style={styles.btnSecondary} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
-            ✨ Get Started Free
-          </button>
+        <div style={{ display: "flex", gap: "20px", justifyContent: "center", marginBottom: "60px", flexWrap: "wrap" }}>
+          <button style={{ padding: "14px 35px", background: "#fff", color: "#000", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: "bold" }}>Launch Dashboard</button>
+          <button style={{ padding: "14px 35px", background: "transparent", color: "#fff", border: "1px solid #fff", borderRadius: "6px", cursor: "pointer", fontWeight: "bold" }}>Get Started Free</button>
         </div>
 
-        {/* Features Grid */}
-        <div style={styles.featuresGrid}>
-          <div style={styles.featureCard}>
-            <div style={styles.featureIcon}>⚡</div>
+        {/* Features */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "30px", marginBottom: "60px" }}>
+          <div style={{ background: "#0a0a0a", padding: "30px", borderRadius: "10px", border: "1px solid #222" }}>
+            <div style={{ fontSize: "48px", marginBottom: "15px" }}>⚡</div>
             <h3>AI Code Generation</h3>
-            <p>Generate production-ready code in seconds</p>
+            <p style={{ color: "#666" }}>Generate production-ready code</p>
           </div>
-          <div style={styles.featureCard}>
-            <div style={styles.featureIcon}>🔒</div>
+          <div style={{ background: "#0a0a0a", padding: "30px", borderRadius: "10px", border: "1px solid #222" }}>
+            <div style={{ fontSize: "48px", marginBottom: "15px" }}>🔒</div>
             <h3>Secure & Scalable</h3>
-            <p>Enterprise-grade security with 99.9% uptime</p>
+            <p style={{ color: "#666" }}>99.9% uptime guarantee</p>
           </div>
-          <div style={styles.featureCard}>
-            <div style={styles.featureIcon}>💎</div>
+          <div style={{ background: "#0a0a0a", padding: "30px", borderRadius: "10px", border: "1px solid #222" }}>
+            <div style={{ fontSize: "48px", marginBottom: "15px" }}>💎</div>
             <h3>Premium Support</h3>
-            <p>24/7 dedicated support team</p>
+            <p style={{ color: "#666" }}>24/7 dedicated team</p>
           </div>
         </div>
 
-        {/* Stats Section */}
-        <div style={styles.statsContainer}>
-          <div style={styles.statBox}>
-            <span style={styles.statNumber}>50K+</span>
-            <span style={styles.statLabel}>Active Developers</span>
-          </div>
-          <div style={styles.statBox}>
-            <span style={styles.statNumber}>5M+</span>
-            <span style={styles.statLabel}>Lines Generated</span>
-          </div>
-          <div style={styles.statBox}>
-            <span style={styles.statNumber}>100%</span>
-            <span style={styles.statLabel}>Satisfaction Rate</span>
-          </div>
+        {/* Stats */}
+        <div style={{ display: "flex", justifyContent: "center", gap: "60px", flexWrap: "wrap", marginBottom: "60px" }}>
+          <div><span style={{ display: "block", fontSize: "36px", fontWeight: "bold" }}>50K+</span><span style={{ color: "#666" }}>Developers</span></div>
+          <div><span style={{ display: "block", fontSize: "36px", fontWeight: "bold" }}>5M+</span><span style={{ color: "#666" }}>Lines</span></div>
+          <div><span style={{ display: "block", fontSize: "36px", fontWeight: "bold" }}>100%</span><span style={{ color: "#666" }}>Satisfaction</span></div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer style={styles.footer}>
-        <p>© 2026 CodeWo Pro AI | Built with Next.js | contact@codewopro.com</p>
+      <footer style={{ textAlign: "center", padding: "30px", borderTop: "1px solid #222", color: "#444", marginTop: "40px" }}>
+        © 2026 CodeWo Pro AI | contact@codewopro.com
       </footer>
+
+      <style>{`
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+      `}</style>
     </div>
   );
-}
-
-const styles = {
-  container: {
-    minHeight: "100vh",
-    background: "#000000",
-    color: "#ffffff",
-    fontFamily: "'Fira Code', 'Courier New', monospace",
-    padding: "20px"
-  },
-  header: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "15px",
-    padding: "20px",
-    borderBottom: "1px solid #333",
-    marginBottom: "40px"
-  },
-  logoCircle: {
-    width: "50px",
-    height: "50px",
-    background: "#000",
-    borderRadius: "50%",
-    border: "2px solid #fff",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  logoCaret: {
-    fontSize: "30px",
-    fontWeight: "bold",
-    color: "#fff"
-  },
-  logoText: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    letterSpacing: "2px"
-  },
-  codingInterface: {
-    maxWidth: "900px",
-    margin: "0 auto 60px auto",
-    background: "#0a0a0a",
-    border: "1px solid #333",
-    borderRadius: "12px",
-    overflow: "hidden",
-    boxShadow: "0 0 30px rgba(255,255,255,0.05)"
-  },
-  interfaceHeader: {
-    background: "#1a1a1a",
-    padding: "12px 20px",
-    display: "flex",
-    alignItems: "center",
-    gap: "15px",
-    borderBottom: "1px solid #333"
-  },
-  windowControls: {
-    display: "flex",
-    gap: "8px"
-  },
-  controlRed: {
-    width: "12px",
-    height: "12px",
-    background: "#ff5f56",
-    borderRadius: "50%",
-    display: "inline-block"
-  },
-  controlYellow: {
-    width: "12px",
-    height: "12px",
-    background: "#ffbd2e",
-    borderRadius: "50%",
-    display: "inline-block"
-  },
-  controlGreen: {
-    width: "12px",
-    height: "12px",
-    background: "#27c93f",
-    borderRadius: "50%",
-    display: "inline-block"
-  },
-  interfaceTitle: {
-    color: "#888",
-    fontSize: "12px"
-  },
-  interfaceBody: {
-    padding: "20px",
-    display: "flex",
-    gap: "15px",
-    fontFamily: "'Fira Code', monospace",
-    fontSize: "14px",
-    minHeight: "300px"
-  },
-  lineNumber: {
-    color: "#444",
-    textAlign: "right",
-    width: "30px"
-  },
-  codeContent: {
-    flex: 1
-  },
-  codeLine: {
-    marginBottom: "8px",
-    lineHeight: "1.6"
-  },
-  promptSymbol: {
-    color: "#00ff00",
-    marginRight: "10px"
-  },
-  typingLine: {
-    display: "flex",
-    alignItems: "center",
-    gap: "5px"
-  },
-  typingCursor: {
-    display: "inline-block",
-    width: "10px",
-    height: "18px",
-    background: "#00ff00",
-    animation: "blink 1s infinite"
-  },
-  interfaceFooter: {
-    background: "#0a0a0a",
-    padding: "10px 20px",
-    borderTop: "1px solid #333",
-    display: "flex",
-    alignItems: "center",
-    gap: "10px"
-  },
-  statusDot: {
-    width: "8px",
-    height: "8px",
-    background: "#00ff00",
-    borderRadius: "50%",
-    display: "inline-block",
-    animation: "pulse 2s infinite"
-  },
-  statusText: {
-    color: "#888",
-    fontSize: "12px"
-  },
-  heroSection: {
-    textAlign: "center",
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "40px 20px"
-  },
-  mainTitle: {
-    fontSize: "64px",
-    marginBottom: "20px",
-    letterSpacing: "-2px"
-  },
-  bracket: {
-    color: "#00ff00"
-  },
-  subtitle: {
-    fontSize: "20px",
-    color: "#888",
-    marginBottom: "40px"
-  },
-  buttonContainer: {
-    display: "flex",
-    gap: "20px",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    marginBottom: "60px"
-  },
-  btnPrimary: {
-    padding: "14px 35px",
-    fontSize: "16px",
-    background: "#fff",
-    color: "#000",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-    fontWeight: "bold",
-    fontFamily: "inherit",
-    transition: "transform 0.2s"
-  },
-  btnSecondary: {
-    padding: "14px 35px",
-    fontSize: "16px",
-    background: "transparent",
-    color: "#fff",
-    border: "1px solid #fff",
-    borderRadius: "6px",
-    cursor: "pointer",
-    fontWeight: "bold",
-    fontFamily: "inherit",
-    transition: "transform 0.2s"
-  },
-  featuresGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "30px",
-    marginBottom: "60px"
-  },
-  featureCard: {
-    background: "#0a0a0a",
-    padding: "30px",
-    borderRadius: "12px",
-    border: "1px solid #222",
-    textAlign: "center",
-    transition: "transform 0.3s"
-  },
-  featureIcon: {
-    fontSize: "48px",
-    marginBottom: "15px"
-  },
-  statsContainer: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "60px",
-    flexWrap: "wrap",
-    marginBottom: "60px"
-  },
-  statBox: {
-    textAlign: "center"
-  },
-  statNumber: {
-    display: "block",
-    fontSize: "36px",
-    fontWeight: "bold",
-    color: "#fff"
-  },
-  statLabel: {
-    fontSize: "14px",
-    color: "#666"
-  },
-  footer: {
-    textAlign: "center",
-    padding: "30px",
-    borderTop: "1px solid #222",
-    color: "#444",
-    fontSize: "12px"
-  }
-};
-
-// Add animations
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-  `;
-  document.head.appendChild(style);
 }
