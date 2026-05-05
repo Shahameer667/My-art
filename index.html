@@ -3,91 +3,133 @@
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [codeLines, setCodeLines] = useState([
-    "> Initializing CodeWo Pro AI...",
-    "> Loading modules...",
-    "> Connecting to AI engine...",
-    "> Ready!"
-  ]);
-  const [currentLine, setCurrentLine] = useState(0);
+  const [step, setStep] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  
+  const codingSteps = [
+    { text: "Step 1: Initializing CodeWo AI Engine...", highlight: "#00ff00" },
+    { text: "Step 2: Loading Neural Networks...", highlight: "#00ff00" },
+    { text: "Step 3: Connecting to Cloud Database...", highlight: "#ffff00" },
+    { text: "Step 4: Setting up API Routes...", highlight: "#ffff00" },
+    { text: "Step 5: Compiling Smart Contracts...", highlight: "#ff6600" },
+    { text: "Step 6: Deploying AI Models...", highlight: "#ff6600" },
+    { text: "Step 7: System Ready! ✅", highlight: "#00ff00" }
+  ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentLine(prev => {
-        if (prev < codeLines.length - 1) {
-          return prev + 1;
-        } else {
-          clearInterval(interval);
-          return prev;
-        }
-      });
-    }, 800);
-    return () => clearInterval(interval);
-  }, []);
+    if (step < codingSteps.length) {
+      const timer = setTimeout(() => {
+        setStep(step + 1);
+        setDisplayText(codingSteps[step].text);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [step]);
 
   return (
     <div style={styles.container}>
-      {/* Black Circle Logo with ^ */}
-      <div style={styles.logoContainer}>
-        <div style={styles.blackCircle}>
-          <span style={styles.caretSymbol}>^</span>
+      {/* Header Logo */}
+      <div style={styles.header}>
+        <div style={styles.logoCircle}>
+          <span style={styles.logoCaret}>^</span>
         </div>
-        <div style={styles.logoText}>CodeWo Pro AI</div>
+        <span style={styles.logoText}>CodeWo Pro AI</span>
       </div>
 
-      {/* Terminal Animation */}
-      <div style={styles.terminal}>
-        <div style={styles.terminalHeader}>
-          <span style={styles.dotRed}></span>
-          <span style={styles.dotYellow}></span>
-          <span style={styles.dotGreen}></span>
-          <span style={styles.terminalTitle}>CodeWo AI Terminal</span>
-        </div>
-        <div style={styles.terminalBody}>
-          {codeLines.slice(0, currentLine + 1).map((line, index) => (
-            <div key={index} style={styles.terminalLine}>
-              <span style={styles.prompt}>$</span> {line}
-              {index === currentLine && currentLine !== codeLines.length - 1 && (
-                <span style={styles.cursor}>_</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div style={styles.content}>
-        <h1 style={styles.title}>CodeWo Pro AI</h1>
-        <p style={styles.subtitle}>AI-Powered Coding SaaS Platform</p>
-        
-        <div style={styles.buttonGroup}>
-          <a href="/dashboard">
-            <button style={styles.btnPrimary}>Launch Dashboard</button>
-          </a>
-          <a href="/signup">
-            <button style={styles.btnSecondary}>Get Started Free</button>
-          </a>
-        </div>
-
-        <div style={styles.stats}>
-          <div style={styles.statItem}>
-            <span style={styles.statNumber}>10K+</span>
-            <span style={styles.statLabel}>Active Users</span>
+      {/* Main Coding Visual Interface */}
+      <div style={styles.codingInterface}>
+        <div style={styles.interfaceHeader}>
+          <div style={styles.windowControls}>
+            <span style={styles.controlRed}></span>
+            <span style={styles.controlYellow}></span>
+            <span style={styles.controlGreen}></span>
           </div>
-          <div style={styles.statItem}>
-            <span style={styles.statNumber}>1M+</span>
+          <span style={styles.interfaceTitle}>CodeWo AI Terminal v2.0</span>
+        </div>
+
+        <div style={styles.interfaceBody}>
+          <div style={styles.lineNumber}>1</div>
+          <div style={styles.codeContent}>
+            {codingSteps.slice(0, step).map((item, idx) => (
+              <div key={idx} style={{...styles.codeLine, color: item.highlight}}>
+                <span style={styles.promptSymbol}>{">>"}</span> {item.text}
+              </div>
+            ))}
+            {step < codingSteps.length && (
+              <div style={styles.typingLine}>
+                <span style={styles.promptSymbol}>></span>
+                <span style={styles.typingCursor}>_</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div style={styles.interfaceFooter}>
+          <span style={styles.statusDot}></span>
+          <span style={styles.statusText}>
+            {step === codingSteps.length ? "System Online ✅" : `Initializing... ${Math.floor(step / codingSteps.length * 100)}%`}
+          </span>
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <div style={styles.heroSection}>
+        <h1 style={styles.mainTitle}>
+          <span style={styles.bracket}>{'<'}</span>
+          CodeWo Pro AI
+          <span style={styles.bracket}>{'/>'}</span>
+        </h1>
+        <p style={styles.subtitle}>Enterprise Grade AI Coding Platform</p>
+        
+        <div style={styles.buttonContainer}>
+          <button style={styles.btnPrimary} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
+            🚀 Launch Dashboard
+          </button>
+          <button style={styles.btnSecondary} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
+            ✨ Get Started Free
+          </button>
+        </div>
+
+        {/* Features Grid */}
+        <div style={styles.featuresGrid}>
+          <div style={styles.featureCard}>
+            <div style={styles.featureIcon}>⚡</div>
+            <h3>AI Code Generation</h3>
+            <p>Generate production-ready code in seconds</p>
+          </div>
+          <div style={styles.featureCard}>
+            <div style={styles.featureIcon}>🔒</div>
+            <h3>Secure & Scalable</h3>
+            <p>Enterprise-grade security with 99.9% uptime</p>
+          </div>
+          <div style={styles.featureCard}>
+            <div style={styles.featureIcon}>💎</div>
+            <h3>Premium Support</h3>
+            <p>24/7 dedicated support team</p>
+          </div>
+        </div>
+
+        {/* Stats Section */}
+        <div style={styles.statsContainer}>
+          <div style={styles.statBox}>
+            <span style={styles.statNumber}>50K+</span>
+            <span style={styles.statLabel}>Active Developers</span>
+          </div>
+          <div style={styles.statBox}>
+            <span style={styles.statNumber}>5M+</span>
             <span style={styles.statLabel}>Lines Generated</span>
           </div>
-          <div style={styles.statItem}>
-            <span style={styles.statNumber}>99.9%</span>
-            <span style={styles.statLabel}>Uptime</span>
+          <div style={styles.statBox}>
+            <span style={styles.statNumber}>100%</span>
+            <span style={styles.statLabel}>Satisfaction Rate</span>
           </div>
         </div>
-
-        <footer style={styles.footer}>
-          <p>© 2026 CodeWo Pro AI | contact@codewopro.com</p>
-        </footer>
       </div>
+
+      {/* Footer */}
+      <footer style={styles.footer}>
+        <p>© 2026 CodeWo Pro AI | Built with Next.js | contact@codewopro.com</p>
+      </footer>
     </div>
   );
 }
@@ -95,130 +137,162 @@ export default function Home() {
 const styles = {
   container: {
     minHeight: "100vh",
-    background: "#0a0a0a",
+    background: "#000000",
     color: "#ffffff",
-    fontFamily: "'Courier New', 'Fira Code', monospace",
+    fontFamily: "'Fira Code', 'Courier New', monospace",
+    padding: "20px"
+  },
+  header: {
     display: "flex",
-    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "40px 20px"
-  },
-  logoContainer: {
-    textAlign: "center",
+    gap: "15px",
+    padding: "20px",
+    borderBottom: "1px solid #333",
     marginBottom: "40px"
   },
-  blackCircle: {
-    width: "80px",
-    height: "80px",
+  logoCircle: {
+    width: "50px",
+    height: "50px",
     background: "#000",
     borderRadius: "50%",
+    border: "2px solid #fff",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    margin: "0 auto 15px auto",
-    border: "2px solid #fff",
-    boxShadow: "0 0 20px rgba(255,255,255,0.2)"
+    justifyContent: "center"
   },
-  caretSymbol: {
-    fontSize: "48px",
+  logoCaret: {
+    fontSize: "30px",
     fontWeight: "bold",
-    color: "#fff",
-    fontFamily: "monospace"
+    color: "#fff"
   },
   logoText: {
-    fontSize: "20px",
+    fontSize: "24px",
     fontWeight: "bold",
-    letterSpacing: "2px",
-    background: "linear-gradient(135deg, #fff, #888)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent"
+    letterSpacing: "2px"
   },
-  terminal: {
-    width: "100%",
-    maxWidth: "700px",
-    background: "#1e1e1e",
-    borderRadius: "10px",
+  codingInterface: {
+    maxWidth: "900px",
+    margin: "0 auto 60px auto",
+    background: "#0a0a0a",
+    border: "1px solid #333",
+    borderRadius: "12px",
     overflow: "hidden",
-    marginBottom: "50px",
-    boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
-    border: "1px solid #333"
+    boxShadow: "0 0 30px rgba(255,255,255,0.05)"
   },
-  terminalHeader: {
-    background: "#2d2d2d",
+  interfaceHeader: {
+    background: "#1a1a1a",
     padding: "12px 20px",
     display: "flex",
     alignItems: "center",
-    gap: "10px",
-    borderBottom: "1px solid #444"
+    gap: "15px",
+    borderBottom: "1px solid #333"
   },
-  dotRed: {
+  windowControls: {
+    display: "flex",
+    gap: "8px"
+  },
+  controlRed: {
     width: "12px",
     height: "12px",
     background: "#ff5f56",
     borderRadius: "50%",
     display: "inline-block"
   },
-  dotYellow: {
+  controlYellow: {
     width: "12px",
     height: "12px",
     background: "#ffbd2e",
     borderRadius: "50%",
     display: "inline-block"
   },
-  dotGreen: {
+  controlGreen: {
     width: "12px",
     height: "12px",
     background: "#27c93f",
     borderRadius: "50%",
     display: "inline-block"
   },
-  terminalTitle: {
-    color: "#aaa",
-    fontSize: "12px",
-    marginLeft: "10px"
+  interfaceTitle: {
+    color: "#888",
+    fontSize: "12px"
   },
-  terminalBody: {
+  interfaceBody: {
     padding: "20px",
-    background: "#1e1e1e",
-    minHeight: "200px"
-  },
-  terminalLine: {
-    color: "#0f0",
+    display: "flex",
+    gap: "15px",
+    fontFamily: "'Fira Code', monospace",
     fontSize: "14px",
-    marginBottom: "8px",
-    fontFamily: "'Courier New', monospace"
+    minHeight: "300px"
   },
-  prompt: {
-    color: "#0f0",
+  lineNumber: {
+    color: "#444",
+    textAlign: "right",
+    width: "30px"
+  },
+  codeContent: {
+    flex: 1
+  },
+  codeLine: {
+    marginBottom: "8px",
+    lineHeight: "1.6"
+  },
+  promptSymbol: {
+    color: "#00ff00",
     marginRight: "10px"
   },
-  cursor: {
+  typingLine: {
+    display: "flex",
+    alignItems: "center",
+    gap: "5px"
+  },
+  typingCursor: {
     display: "inline-block",
-    width: "8px",
-    background: "#0f0",
-    marginLeft: "5px",
+    width: "10px",
+    height: "18px",
+    background: "#00ff00",
     animation: "blink 1s infinite"
   },
-  content: {
-    textAlign: "center",
-    maxWidth: "900px",
-    width: "100%"
+  interfaceFooter: {
+    background: "#0a0a0a",
+    padding: "10px 20px",
+    borderTop: "1px solid #333",
+    display: "flex",
+    alignItems: "center",
+    gap: "10px"
   },
-  title: {
-    fontSize: "56px",
+  statusDot: {
+    width: "8px",
+    height: "8px",
+    background: "#00ff00",
+    borderRadius: "50%",
+    display: "inline-block",
+    animation: "pulse 2s infinite"
+  },
+  statusText: {
+    color: "#888",
+    fontSize: "12px"
+  },
+  heroSection: {
+    textAlign: "center",
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "40px 20px"
+  },
+  mainTitle: {
+    fontSize: "64px",
     marginBottom: "20px",
-    background: "linear-gradient(135deg, #fff, #888)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    letterSpacing: "-1px"
+    letterSpacing: "-2px"
+  },
+  bracket: {
+    color: "#00ff00"
   },
   subtitle: {
     fontSize: "20px",
-    color: "#aaa",
+    color: "#888",
     marginBottom: "40px"
   },
-  buttonGroup: {
+  buttonContainer: {
     display: "flex",
     gap: "20px",
     justifyContent: "center",
@@ -231,10 +305,11 @@ const styles = {
     background: "#fff",
     color: "#000",
     border: "none",
-    borderRadius: "5px",
+    borderRadius: "6px",
     cursor: "pointer",
     fontWeight: "bold",
-    fontFamily: "inherit"
+    fontFamily: "inherit",
+    transition: "transform 0.2s"
   },
   btnSecondary: {
     padding: "14px 35px",
@@ -242,46 +317,70 @@ const styles = {
     background: "transparent",
     color: "#fff",
     border: "1px solid #fff",
-    borderRadius: "5px",
+    borderRadius: "6px",
     cursor: "pointer",
     fontWeight: "bold",
-    fontFamily: "inherit"
+    fontFamily: "inherit",
+    transition: "transform 0.2s"
   },
-  stats: {
+  featuresGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: "30px",
+    marginBottom: "60px"
+  },
+  featureCard: {
+    background: "#0a0a0a",
+    padding: "30px",
+    borderRadius: "12px",
+    border: "1px solid #222",
+    textAlign: "center",
+    transition: "transform 0.3s"
+  },
+  featureIcon: {
+    fontSize: "48px",
+    marginBottom: "15px"
+  },
+  statsContainer: {
     display: "flex",
     justifyContent: "center",
-    gap: "50px",
+    gap: "60px",
     flexWrap: "wrap",
     marginBottom: "60px"
   },
-  statItem: {
+  statBox: {
     textAlign: "center"
   },
   statNumber: {
     display: "block",
-    fontSize: "32px",
+    fontSize: "36px",
     fontWeight: "bold",
     color: "#fff"
   },
   statLabel: {
     fontSize: "14px",
-    color: "#888"
+    color: "#666"
   },
   footer: {
-    borderTop: "1px solid #333",
-    paddingTop: "30px",
-    color: "#555",
+    textAlign: "center",
+    padding: "30px",
+    borderTop: "1px solid #222",
+    color: "#444",
     fontSize: "12px"
   }
 };
 
-// Add animation style
+// Add animations
 if (typeof document !== 'undefined') {
   const style = document.createElement('style');
   style.textContent = `
     @keyframes blink {
       0%, 50% { opacity: 1; }
       51%, 100% { opacity: 0; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
   `;
   document.head.appendChild(style);
