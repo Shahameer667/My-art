@@ -1,54 +1,288 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>CodeWo Pro AI</title>
-    <style>
-        body {
-            text-align: center;
-            padding: 100px;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+"use client";
+
+import { useState, useEffect } from "react";
+
+export default function Home() {
+  const [codeLines, setCodeLines] = useState([
+    "> Initializing CodeWo Pro AI...",
+    "> Loading modules...",
+    "> Connecting to AI engine...",
+    "> Ready!"
+  ]);
+  const [currentLine, setCurrentLine] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentLine(prev => {
+        if (prev < codeLines.length - 1) {
+          return prev + 1;
+        } else {
+          clearInterval(interval);
+          return prev;
         }
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            background: white;
-            color: #764ba2;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        button:hover {
-            transform: scale(1.05);
-        }
-        .info {
-            margin-top: 50px;
-            font-size: 16px;
-            background: rgba(255,255,255,0.2);
-            padding: 20px;
-            border-radius: 10px;
-        }
-        a {
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <h1>🚀 CodeWo Pro AI</h1>
-    <p>AI Coding SaaS Platform</p>
-    <p>Powered by Next.js & OpenAI</p>
-    
-    <a href="https://forms.gle/your-google-form-link" target="_blank">
-        <button>Get Started</button>
-    </a>
-    
-    <div class="info">
-        📌 Full SaaS features (AI + Payment + Database) <br>
-        🚀 Coming in 2 weeks! <br>
-        👇 Enter your email to get notified
+      });
+    }, 800);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={styles.container}>
+      {/* Black Circle Logo with ^ */}
+      <div style={styles.logoContainer}>
+        <div style={styles.blackCircle}>
+          <span style={styles.caretSymbol}>^</span>
+        </div>
+        <div style={styles.logoText}>CodeWo Pro AI</div>
+      </div>
+
+      {/* Terminal Animation */}
+      <div style={styles.terminal}>
+        <div style={styles.terminalHeader}>
+          <span style={styles.dotRed}></span>
+          <span style={styles.dotYellow}></span>
+          <span style={styles.dotGreen}></span>
+          <span style={styles.terminalTitle}>CodeWo AI Terminal</span>
+        </div>
+        <div style={styles.terminalBody}>
+          {codeLines.slice(0, currentLine + 1).map((line, index) => (
+            <div key={index} style={styles.terminalLine}>
+              <span style={styles.prompt}>$</span> {line}
+              {index === currentLine && currentLine !== codeLines.length - 1 && (
+                <span style={styles.cursor}>_</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div style={styles.content}>
+        <h1 style={styles.title}>CodeWo Pro AI</h1>
+        <p style={styles.subtitle}>AI-Powered Coding SaaS Platform</p>
+        
+        <div style={styles.buttonGroup}>
+          <a href="/dashboard">
+            <button style={styles.btnPrimary}>Launch Dashboard</button>
+          </a>
+          <a href="/signup">
+            <button style={styles.btnSecondary}>Get Started Free</button>
+          </a>
+        </div>
+
+        <div style={styles.stats}>
+          <div style={styles.statItem}>
+            <span style={styles.statNumber}>10K+</span>
+            <span style={styles.statLabel}>Active Users</span>
+          </div>
+          <div style={styles.statItem}>
+            <span style={styles.statNumber}>1M+</span>
+            <span style={styles.statLabel}>Lines Generated</span>
+          </div>
+          <div style={styles.statItem}>
+            <span style={styles.statNumber}>99.9%</span>
+            <span style={styles.statLabel}>Uptime</span>
+          </div>
+        </div>
+
+        <footer style={styles.footer}>
+          <p>© 2026 CodeWo Pro AI | contact@codewopro.com</p>
+        </footer>
+      </div>
     </div>
-</body>
-</html>
+  );
+}
+
+const styles = {
+  container: {
+    minHeight: "100vh",
+    background: "#0a0a0a",
+    color: "#ffffff",
+    fontFamily: "'Courier New', 'Fira Code', monospace",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "40px 20px"
+  },
+  logoContainer: {
+    textAlign: "center",
+    marginBottom: "40px"
+  },
+  blackCircle: {
+    width: "80px",
+    height: "80px",
+    background: "#000",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "0 auto 15px auto",
+    border: "2px solid #fff",
+    boxShadow: "0 0 20px rgba(255,255,255,0.2)"
+  },
+  caretSymbol: {
+    fontSize: "48px",
+    fontWeight: "bold",
+    color: "#fff",
+    fontFamily: "monospace"
+  },
+  logoText: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    letterSpacing: "2px",
+    background: "linear-gradient(135deg, #fff, #888)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent"
+  },
+  terminal: {
+    width: "100%",
+    maxWidth: "700px",
+    background: "#1e1e1e",
+    borderRadius: "10px",
+    overflow: "hidden",
+    marginBottom: "50px",
+    boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
+    border: "1px solid #333"
+  },
+  terminalHeader: {
+    background: "#2d2d2d",
+    padding: "12px 20px",
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    borderBottom: "1px solid #444"
+  },
+  dotRed: {
+    width: "12px",
+    height: "12px",
+    background: "#ff5f56",
+    borderRadius: "50%",
+    display: "inline-block"
+  },
+  dotYellow: {
+    width: "12px",
+    height: "12px",
+    background: "#ffbd2e",
+    borderRadius: "50%",
+    display: "inline-block"
+  },
+  dotGreen: {
+    width: "12px",
+    height: "12px",
+    background: "#27c93f",
+    borderRadius: "50%",
+    display: "inline-block"
+  },
+  terminalTitle: {
+    color: "#aaa",
+    fontSize: "12px",
+    marginLeft: "10px"
+  },
+  terminalBody: {
+    padding: "20px",
+    background: "#1e1e1e",
+    minHeight: "200px"
+  },
+  terminalLine: {
+    color: "#0f0",
+    fontSize: "14px",
+    marginBottom: "8px",
+    fontFamily: "'Courier New', monospace"
+  },
+  prompt: {
+    color: "#0f0",
+    marginRight: "10px"
+  },
+  cursor: {
+    display: "inline-block",
+    width: "8px",
+    background: "#0f0",
+    marginLeft: "5px",
+    animation: "blink 1s infinite"
+  },
+  content: {
+    textAlign: "center",
+    maxWidth: "900px",
+    width: "100%"
+  },
+  title: {
+    fontSize: "56px",
+    marginBottom: "20px",
+    background: "linear-gradient(135deg, #fff, #888)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    letterSpacing: "-1px"
+  },
+  subtitle: {
+    fontSize: "20px",
+    color: "#aaa",
+    marginBottom: "40px"
+  },
+  buttonGroup: {
+    display: "flex",
+    gap: "20px",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    marginBottom: "60px"
+  },
+  btnPrimary: {
+    padding: "14px 35px",
+    fontSize: "16px",
+    background: "#fff",
+    color: "#000",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    fontFamily: "inherit"
+  },
+  btnSecondary: {
+    padding: "14px 35px",
+    fontSize: "16px",
+    background: "transparent",
+    color: "#fff",
+    border: "1px solid #fff",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    fontFamily: "inherit"
+  },
+  stats: {
+    display: "flex",
+    justifyContent: "center",
+    gap: "50px",
+    flexWrap: "wrap",
+    marginBottom: "60px"
+  },
+  statItem: {
+    textAlign: "center"
+  },
+  statNumber: {
+    display: "block",
+    fontSize: "32px",
+    fontWeight: "bold",
+    color: "#fff"
+  },
+  statLabel: {
+    fontSize: "14px",
+    color: "#888"
+  },
+  footer: {
+    borderTop: "1px solid #333",
+    paddingTop: "30px",
+    color: "#555",
+    fontSize: "12px"
+  }
+};
+
+// Add animation style
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+}
